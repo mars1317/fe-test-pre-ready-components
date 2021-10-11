@@ -2,18 +2,16 @@ import Table from 'components/Table';
 import React, {useEffect, useState} from 'react';
 import { hot } from 'react-hot-loader';
 import { getGroupsPage } from 'api/getGroupsPage';
-import axios from 'axios';
-import { GroupDTO } from 'types/Group';
 import { GroupPageDTO } from 'types/Group';
+import { GroupDTO } from 'types/Group';
 import {TablePaginationObject} from 'types/Table';
 import TableCell from 'components/TableCell';
 import TableHeader from 'components/TableHeader';
 import TableBody from 'components/TableBody';
 import Loader from 'components/Loader';
-
-import TableHeading from 'components/TableHeading';
 import TableRow from 'components/TableRow';
 import Dropdown from 'components/Dropdown';
+
 const App: React.FC = () => {
   const initialPage:number = 1;
   const [data, setData] = useState<GroupPageDTO>()
@@ -47,13 +45,18 @@ const App: React.FC = () => {
             <TableHeader>
               <TableRow>
                 <TableCell> Client</TableCell>
+                <TableCell> Create time</TableCell>
+                <TableCell> Last update time</TableCell>
+
                 <TableCell> Insurance company</TableCell>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.result.map( (item, index)=>
+              {data.result.map( (item:GroupDTO, index:number)=>
                 <TableRow key={item.name+Math.random()}>
                   <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.creationDateTime}</TableCell>
+                  <TableCell>{item.lastUpdateTime}</TableCell>
                   <TableCell><Dropdown index={index} name={dropdownName} options={dropdownOptions}/></TableCell>
                 </TableRow>
               )}
@@ -67,7 +70,6 @@ const App: React.FC = () => {
       <Loader/>
     )
   }
- 
 };
 
 
